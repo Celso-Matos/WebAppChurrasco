@@ -1,0 +1,109 @@
+﻿@model WebAppChurrasco.ViewModel.Churrasco
+
+@{
+    ViewData["Title"] = "Novo Churrasco";
+}
+
+<div class="row">
+    <div class="card border">
+        <div class="card-header bg-warning">
+            <h3 class="text-white"><strong>Agenda de Churras - Novo Churras</strong></h3>
+        </div>
+        <div id="msgSucesso" class="col-md-12 d-md-none">
+            <div id="msgSucessoTexto" class="alert alert-success" role="alert"></div>
+        </div>
+        <div id="msgErro" class="col-md-12 d-md-none">
+            <div id="msgErroTexto" class="alert alert-danger" role="alert"></div>
+        </div>
+        <div id="msgInfo" class="col-md-12 d-md-none">
+            <div id="msgInfoTexto" class="alert alert-info" role="alert"></div>
+        </div>
+        <div class="card-body">
+            <form asp-action="NovoChurrasco" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div >
+                    <label asp-for="DescChurras" class="control-label"></label>
+                    <span asp-validation-for="DescChurras" class="text-danger"></span>
+                    <div class="form-group">                        
+                        <input asp-for="DescChurras" maxlength="150" class="text-danger col-xl-12" placeholder="Descrição do churrasco" />                        
+                    </div>
+                </div>
+                <br />
+                <div >
+                    <label asp-for="ObsAdsChurras" class="control-label"></label>
+                    <div class="form-group">
+                        @Html.TextAreaFor(model => model.ObsAdsChurras, new { @class = "form-control", @maxlength="300", style = "height: 80px;"})
+                    </div>
+                </div>
+                <br />
+                <div >
+                    <label asp-for="DataChurras" class="control-label"></label>
+                    <span asp-validation-for="DataChurras" class="text-danger"></span>
+                    <div class="form-group">                        
+                        <input asp-for="DataChurras" class="text-danger"/>                        
+                    </div>
+                </div>
+                <br />
+                <div >
+                    <div class="form-group mt-3">
+                        <a class="btn btn-danger" asp-controller="Home" asp-action="AgendaChurrasco">Voltar</a>
+                        <button type="submit" class="btn btn-primary">Cadastrar Churras</button>
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            var msgRetorno = '@TempData["msgRetorno"]';
+
+            if (msgRetorno == "Sucesso") {                
+                $("#msgSucessoTexto").empty();
+                $("#msgSucessoTexto").html('Solicitação realizada com sucesso!');
+                $("#msgSucesso").removeClass("d-md-none");
+
+            }else{
+                
+                $("#msgSucessoTexto").empty();
+                $("#msgSucesso").addClass("d-md-none");
+            };
+
+            if (msgRetorno == "Erro") {
+
+                $("#msgErroTexto").empty();
+                $("#msgErroTexto").html('Solicitação realizada com Erro. Contate o administrador!');
+                $("#msgErro").removeClass("d-md-none");
+
+            }else{
+
+                $("#msgErroTexto").empty();
+                $("#msgErro").addClass("d-md-none");
+
+            };
+
+            if (msgRetorno != "Sucesso" &
+                msgRetorno != "Erro" &
+                msgRetorno != "") {
+
+                $("#msgInfoTexto").empty();
+                $("#msgInfoTexto").html(msgRetorno);
+                $("#msgInfo").removeClass("d-md-none");
+
+            } else {
+
+                $("#msgInfoTexto").empty();
+                $("#msgInfo").addClass("d-md-none");
+
+            };
+            
+        });
+    </script>
+
+}
